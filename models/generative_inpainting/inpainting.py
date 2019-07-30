@@ -30,27 +30,18 @@ class ImageComplete(object):
         tf.reset_default_graph()
         with tf.Session(config=sess_config) as sess:
             self.input_image = tf.constant(self.input_image, dtype=tf.float32)
-            print("debug")
             output = self.model.build_server_graph(self.input_image)
-            print("debug2")
             output = (output + 1.) * 127.5
             output = tf.reverse(output, [-1])
-            print("debug3")
             output = tf.saturate_cast(output, tf.uint8)
-            print("debug4")
             # load pretrained model
             vars_list = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
-            print("debug5")
             assign_ops = []
             for var in vars_list:
                 vname = var.name
                 from_name = vname
-                print("debug6")
-                print(self.model_path)
                 var_value = tf.contrib.framework.load_variable(self.model_path, from_name)
-                print("debug7")
                 assign_ops.append(tf.assign(var, var_value))
-            print("start run")
             sess.run(assign_ops)
             print('Model loaded.')
             result = sess.run(output)

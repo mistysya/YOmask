@@ -19,6 +19,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btnDetect.clicked.connect(self.detect_image)
         self.btnRemove.clicked.connect(self.complete_image)
         self.listResult.itemSelectionChanged.connect(self.select_objects)
+        self.btnOriginImg.pressed.connect(self.display_origin)
+        self.btnOriginImg.released.connect(self.display_modify)
         # component style setting
         self.lblImg.setCursor(Qt.CrossCursor)
         # init using variable
@@ -36,16 +38,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         pixmap = QPixmap.fromImage(qImg)
         self.lblImg.setPixmap(pixmap)
 
+    def display_origin(self):
+        self.update_image(self.origin_img)
+
+    def display_modify(self):
+        self.update_image(self.modify_img)
+
     def generate_mask(self, image):
         self.mask = np.zeros(shape=image.shape, dtype=np.uint8)
+        image = self.modify_img.copy()
         for box in self.select_boxes:
             if not np.any(box):
                 # Skip this instance. Has no bbox. Likely lost in image cropping.
                 continue
             y1, x1, y2, x2 = box
             cv2.rectangle(self.mask, (x1, y1), (x2, y2), (255, 255, 255), -1)
-            cv2.rectangle(self.modify_img, (x1, y1), (x2, y2), (255, 255, 255), -1)
-        self.update_image(self.modify_img)
+            cv2.rectangle(image, (x1, y1), (x2, y2), (255, 255, 255), -1)
+        self.update_image(image)
 
     def upload_image(self):
         # Upload image by using QFileDialog
@@ -73,7 +82,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Use Mask-RCNN detect image in lblImg
         # show result in listResult
         try:
-            result = utils.detect(self.origin_img)
+            result = utils.detect(self.modify_img)
             print(result['class_names'])
             print(result['scores'])
             self.detect_result = result
@@ -91,6 +100,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             mask = self.mask
             # result = utils.complete(self.origin_img, mask)
             result = utils.complete(self.modify_img, mask)
+            cv2.imshow("res", result[:, :, ::-1])
+            self.modify_img = result[:, :, ::-1]
             h, w, bytes = result.shape
             bytesPerLine = 3 * w
             QImg = QImage(result.data, w, h, bytesPerLine, QImage.Format_RGB888)
