@@ -24,7 +24,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btnOriginImg.released.connect(self.display_modify)
         # component style setting
         self.frame.setCursor(Qt.ArrowCursor)
-        self.img_area = ImageArea()
+        print(self.verticalLayoutWidget.geometry().width(), self.verticalLayoutWidget.geometry().height())
+        self.img_area = ImageArea(self.verticalLayoutWidget.geometry().width(),
+                                  self.verticalLayoutWidget.geometry().height())
         self.verticalLayout.addWidget(self.img_area)
         # init using variable
         self.origin_img = None
@@ -34,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.select_boxes = []
         self.free_select_mode = False
         # self.lblImg_center_point = (0, 0)
+        # for test
 
     def update_image(self, image):
         h, w, _ = image.shape
@@ -145,18 +148,30 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 class ImageArea(QWidget):  # 不可用QMainWindow,因为QLabel继承自QWidget
-    def __init__(self):
+    def __init__(self, width, height):
         super(ImageArea, self).__init__()
-        self.resize(500, 500)  # 设定窗口大小(根据自己显示图片的大小，可更改)
-        self.setMinimumSize(500, 500)
-        #self.setWindowTitle("图片操作")  # 设定窗口名称
+        # self.resize(500, 500)  # 设定窗口大小(根据自己显示图片的大小，可更改)
+        # self.setMinimumSize(500, 500)
 
-        self.imgPixmap = QPixmap('models\\mask_rcnn\\DSC_0026 - 36028966554.jpg')  # 载入图片
-        self.scaledImg = self.imgPixmap.scaled(self.size())  # 初始化缩放图
+        # self.imgPixmap = QPixmap('models\\mask_rcnn\\DSC_0026 - 36028966554.jpg')
+        self.imgPixmap = None
+        # self.scaledImg = self.imgPixmap.scaled(self.size())  # 初始化缩放图
+        self.scaledImg = None
         self.singleOffset = QPoint(0, 0)  # 初始化偏移值
 
         self.isLeftPressed = bool(False)  # 图片被点住(鼠标左键)标志位
         self.isImgLabelArea = bool(True)  # 鼠标进入label图片显示区域
+
+        # initialize variable
+        self.layout_width = width
+        self.layout_height = height
+        self.select_rect = None
+        self.select_mode = False
+
+        #for test
+        self.lblTest = QtWidgets.QLabel(self)
+        self.lblTest.setGeometry(10, 550, 300, 20)
+        self.lblTest.setText("Offset: (0, 0)")
 
     def update_image(self, pixmap):
         self.imgPixmap = pixmap
@@ -171,9 +186,11 @@ class ImageArea(QWidget):  # 不可用QMainWindow,因为QLabel继承自QWidget
         self.imgPainter = QPainter()  # 用于动态绘制图片
         self.imgFramePainter = QPainter()  # 用于动态绘制图片外线框
         self.imgPainter.begin(self)  # 无begin和end,则将一直循环更新
-        self.imgPainter.drawPixmap(self.singleOffset, self.scaledImg)  # 从图像文件提取Pixmap并显示在指定位置
-        self.imgFramePainter.setPen(QColor(168, 34, 3))  # 不设置则为默认黑色   # 设置绘图颜色/大小/样式
-        self.imgFramePainter.drawRect(10, 10, 480, 480)  # 为图片绘外线狂(向外延展1)
+        self.lblTest.setText("Offset: ({0}, {1})".format(self.singleOffset.x(), self.singleOffset.y()))
+        if self.scaledImg is not None:
+            self.imgPainter.drawPixmap(self.singleOffset, self.scaledImg)  # 从图像文件提取Pixmap并显示在指定位置
+            # self.imgFramePainter.setPen(QColor(168, 34, 3))  # 不设置则为默认黑色   # 设置绘图颜色/大小/样式
+            # self.imgFramePainter.drawRect(10, 10, 480, 480)  # 为图片绘外线狂(向外延展1)
         self.imgPainter.end()  # 无begin和end,则将一直循环更新
 
     # =============================================================================
@@ -212,22 +229,26 @@ class ImageArea(QWidget):  # 不可用QMainWindow,因为QLabel继承自QWidget
         angleY = angle.y()  # 竖直滚过的距离
         if angleY > 0:  # 滚轮上滚
             print("鼠标中键上滚")  # 响应测试语句
-            self.scaledImg = self.imgPixmap.scaled(self.scaledImg.width() + 5,
-                                                   self.scaledImg.height() + 5)
+            self.scaledImg = self.imgPixmap.scaled(self.scaledImg.width() + self.imgPixmap.width() // 20,
+                                                   self.scaledImg.height() + self.imgPixmap.width() // 20,
+                                                   Qt.KeepAspectRatio,
+                                                   transformMode=Qt.SmoothTransformation)
             newWidth = event.x() - (self.scaledImg.width() * (event.x() - self.singleOffset.x())) \
-                       / (self.scaledImg.width() - 5)
+                       / (self.scaledImg.width() - self.imgPixmap.width() // 20)
             newHeight = event.y() - (self.scaledImg.height() * (event.y() - self.singleOffset.y())) \
-                        / (self.scaledImg.height() - 5)
+                        / (self.scaledImg.height() - self.imgPixmap.width() // 20)
             self.singleOffset = QPoint(newWidth, newHeight)  # 更新偏移量
             self.repaint()  # 重绘
         else:  # 滚轮下滚
             print("鼠标中键下滚")  # 响应测试语句
-            self.scaledImg = self.imgPixmap.scaled(self.scaledImg.width() - 5,
-                                                   self.scaledImg.height() - 5)
+            self.scaledImg = self.imgPixmap.scaled(self.scaledImg.width() - self.imgPixmap.width() // 20,
+                                                   self.scaledImg.height() - self.imgPixmap.width() // 20,
+                                                   Qt.KeepAspectRatio,
+                                                   transformMode=Qt.SmoothTransformation)
             newWidth = event.x() - (self.scaledImg.width() * (event.x() - self.singleOffset.x())) \
-                       / (self.scaledImg.width() + 5)
+                       / (self.scaledImg.width() + self.imgPixmap.width() // 20)
             newHeight = event.y() - (self.scaledImg.height() * (event.y() - self.singleOffset.y())) \
-                        / (self.scaledImg.height() + 5)
+                        / (self.scaledImg.height() + self.imgPixmap.width() // 20)
             self.singleOffset = QPoint(newWidth, newHeight)  # 更新偏移量
             self.repaint()  # 重绘
 
@@ -248,10 +269,39 @@ class ImageArea(QWidget):  # 不可用QMainWindow,因为QLabel继承自QWidget
     def mouseMoveEvent(self, event):
         if self.isLeftPressed:  # 左键按下
             print("鼠标左键按下，移动鼠标")  # 响应测试语句
+            width_gap = self.layout_width - self.scaledImg.width()
+            print(width_gap, self.layout_width, self.scaledImg.width())
+            height_gap = self.layout_height - self.scaledImg.height()
+            print(height_gap, self.layout_height, self.scaledImg.height())
             self.endMousePosition = event.pos() - self.preMousePosition  # 鼠标当前位置-先前位置=单次偏移量
             self.singleOffset = self.singleOffset + self.endMousePosition  # 更新偏移量
+            # if width of image smaller than width of layout
+            if width_gap > 0:
+                if self.singleOffset.x() < 0:
+                    self.singleOffset.setX(0)
+                elif self.singleOffset.x() > width_gap:
+                    self.singleOffset.setX(width_gap)
+            # if width of image bigger than width of layout
+            else:
+                if self.singleOffset.x() > 0:
+                    self.singleOffset.setX(0)
+                elif self.singleOffset.x() < width_gap:
+                    self.singleOffset.setX(width_gap)
+            # if height of image smaller than height of layout
+            if height_gap > 0:
+                if self.singleOffset.y() < 0:
+                    self.singleOffset.setY(0)
+                elif self.singleOffset.y() > height_gap:
+                    self.singleOffset.setY(height_gap)
+            # if height of image bigger than height of layout
+            else:
+                if self.singleOffset.y() > 0:
+                    self.singleOffset.setY(0)
+                elif self.singleOffset.y() < height_gap:
+                    self.singleOffset.setY(height_gap)
+
             self.preMousePosition = event.pos()  # 更新当前鼠标在窗口上的位置，下次移动用
-            self.repaint()  # 重绘
+            self.update()  # 重绘
 
 
 
