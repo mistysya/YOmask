@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="file" name="file" onchange="showImg(this)" />
+	<img id="showimg" src="" style="display:none;" />
+	<script type="text/javascript">
+		function showImg(thisimg) {
+			var file = thisimg.files[0];
+			if(window.FileReader) {
+				var fr = new FileReader();
+				
+				var showimg = document.getElementById('showimg');
+				fr.onloadend = function(e) {
+				showimg.src = e.target.result;
+				//alert(e.target.result);
+			};
+			fr.readAsDataURL(file);
+			showimg.style.display = 'block';
+			}
+		}
+	</script>
+</body>
+</html>
