@@ -6,7 +6,7 @@ from collections import Counter  # Counter counts the number of occurrences of e
 from itertools import tee, count
 
 # Root directory of the project
-ROOT_DIR = os.path.abspath("") + '\\models\\mask_rcnn'  # use in GUI
+ROOT_DIR = os.path.abspath("") + '/models/mask_rcnn'  # use in GUI
 # ROOT_DIR = os.path.abspath("")  # use in test
 
 # Import Mask RCNN
