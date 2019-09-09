@@ -4,7 +4,25 @@ import os
 import json
 import requests
 import utils
+import base64
+import cv2
+import numpy as np
 app = Flask(__name__,static_url_path='',root_path=os.getcwd())
+
+def img_base64_decode(img):
+    sp = img.split(';base64,')
+    imgType = sp[0].split('image/')[1] 
+    img = sp[1]
+    lenx = len(img)%4
+    if lenx == 1:
+        img += '==='
+    if lenx == 2:
+        img += '=='
+    if lenx == 3:
+        img += '='
+    img = base64.decodebytes(img.encode())
+    return img,imgType
+
 
 
 @app.route('/')
@@ -20,22 +38,28 @@ def set_cookie():
     response.set_cookie('id', "123")
     return response
 
-
-@app.route('/detect_image')
+@app.route('/detect_image',methods=['POST'])
 def detect_image():
-    # Use Mask-RCNN detect image in lblImg
-    # show result in listResult
-    try:
-        img = request.args.get('img')
-        result = utils.detect(img)
-        print(result['class_names'])
-        print(result['scores'])
-        r = {'Result':result}
-        return jsonify(r)
-        
-    except Exception as e:
-            print("Get Error when detect image.")
-            print("Error message:", e)
+    img = request.values['img']
+    img,imgType = img_base64_decode(img)
+
+    '''
+    print(imgType)
+    with open("img."+imgType, "wb") as fh:
+        fh.write(img)
+    '''    
+    image = np.asarray(bytearray(img))
+    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+    #print(image.shape)
+    result = utils.detect(image)
+    #print(result['class_names'])
+    #print(result['scores'])
+    rois = result['rois']
+    dic = {}
+    dic['index']=rois.tolist()
+    r = {'rois': dic['index'],'class_names':result['class_names']}
+    return jsonify(r) 
+
 
 @app.route('/complete_image')
 def complete_image():

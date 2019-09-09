@@ -4,8 +4,12 @@
 	<title></title>
 </head>
 <body>
-	<input type="file" name="file" onchange="showImg(this)" />
+	<!--<input type="file" name="file" onchange="showImg(this)" />-->
+    <input type="file" name="file" id="file" />
+    <input type="button" value="Detect" id="Detect">
 	<img id="showimg" src="" style="display:none;" />
+    
+    <!--
 	<script type="text/javascript">
 		function showImg(thisimg) {
 			var file = thisimg.files[0];
@@ -22,5 +26,8 @@
 			}
 		}
 	</script>
+    -->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
