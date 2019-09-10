@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1065</width>
-    <height>600</height>
+    <width>1150</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>831</width>
-      <height>501</height>
+      <x>20</x>
+      <y>10</y>
+      <width>800</width>
+      <height>600</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -29,30 +29,25 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="lblImg">
+    <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>7</x>
-       <y>4</y>
-       <width>821</width>
-       <height>491</height>
+       <x>0</x>
+       <y>0</y>
+       <width>800</width>
+       <height>580</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Img</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout"/>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
-      <x>849</x>
-      <y>9</y>
-      <width>211</width>
-      <height>561</height>
+      <x>840</x>
+      <y>10</y>
+      <width>291</width>
+      <height>641</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -66,8 +61,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>61</width>
-       <height>28</height>
+       <width>281</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
@@ -78,8 +73,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
-       <width>191</width>
+       <y>90</y>
+       <width>281</width>
        <height>21</height>
       </rect>
      </property>
@@ -91,9 +86,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
-       <width>93</width>
-       <height>28</height>
+       <y>220</y>
+       <width>271</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -104,9 +99,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>120</y>
-       <width>93</width>
-       <height>28</height>
+       <y>280</y>
+       <width>271</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -117,8 +112,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>200</y>
-       <width>191</width>
+       <y>370</y>
+       <width>271</width>
        <height>192</height>
       </rect>
      </property>
@@ -139,9 +134,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>400</y>
-       <width>93</width>
-       <height>28</height>
+       <y>590</y>
+       <width>271</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -151,10 +146,10 @@
     <widget class="QLabel" name="lblResult">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>91</width>
-       <height>16</height>
+       <x>20</x>
+       <y>340</y>
+       <width>101</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -165,9 +160,9 @@
    <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>509</y>
-      <width>831</width>
+      <x>10</x>
+      <y>590</y>
+      <width>801</width>
       <height>61</height>
      </rect>
     </property>
@@ -180,7 +175,7 @@
     <widget class="QPushButton" name="btnCreateMask">
      <property name="geometry">
       <rect>
-       <x>650</x>
+       <x>620</x>
        <y>10</y>
        <width>171</width>
        <height>41</height>
