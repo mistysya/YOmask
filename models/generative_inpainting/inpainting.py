@@ -4,13 +4,14 @@ import numpy as np
 import tensorflow as tf
 
 from models.generative_inpainting.inpaint_model import InpaintCAModel
+#from inpaint_model import InpaintCAModel
 
 
 class ImageComplete(object):
     def __init__(self):
         self.model = InpaintCAModel()
         self.model_path = 'models\\generative_inpainting\\model_logs\\release_imagenet_256'
-        self.model_path = 'C:\\Users\\Misty\\Documents\\GitHub\\YOmask\\models\\generative_inpainting\\model_logs\\release_imagenet_256'
+        # self.model_path = 'C:\\Users\\Misty\\Documents\\GitHub\\\ImgObjRemove\\models\\generative_inpainting\\model_logs\\release_imagenet_256'
 
     def prepare(self, image, mask):
         assert image.shape == mask.shape

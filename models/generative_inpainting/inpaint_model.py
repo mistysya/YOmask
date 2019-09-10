@@ -17,6 +17,12 @@ from models.generative_inpainting.inpaint_ops import gen_conv, gen_deconv, dis_c
 from models.generative_inpainting.inpaint_ops import random_bbox, bbox2mask, local_patch
 from models.generative_inpainting.inpaint_ops import spatial_discounting_mask
 from models.generative_inpainting.inpaint_ops import resize_mask_like, contextual_attention
+'''
+from inpaint_ops import gen_conv, gen_deconv, dis_conv
+from inpaint_ops import random_bbox, bbox2mask, local_patch
+from inpaint_ops import spatial_discounting_mask
+from inpaint_ops import resize_mask_like, contextual_attention
+'''
 
 
 logger = logging.getLogger()

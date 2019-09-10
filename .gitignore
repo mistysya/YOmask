@@ -3,3 +3,4 @@ __pycache__
 .idea
 *.h5
 *.log
+.vscode/settings.json
