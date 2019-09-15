@@ -10,7 +10,8 @@ from models.generative_inpainting.inpaint_model import InpaintCAModel
 class ImageComplete(object):
     def __init__(self):
         self.model = InpaintCAModel()
-        self.model_path = 'models\\generative_inpainting\\model_logs\\release_imagenet_256'
+        #self.model_path = 'models\\generative_inpainting\\model_logs\\release_imagenet_256'
+        self.model_path = 'models/generative_inpainting/model_logs/release_imagenet_256'
         # self.model_path = 'C:\\Users\\Misty\\Documents\\GitHub\\\ImgObjRemove\\models\\generative_inpainting\\model_logs\\release_imagenet_256'
 
     def prepare(self, image, mask):
@@ -47,8 +48,8 @@ class ImageComplete(object):
             print('Model loaded.')
             result = sess.run(output)
             # cv2.imwrite(args.output, result[0][:, :, ::-1])
-            cv2.imshow("result", result[0][:, :, ::-1])
-            cv2.waitKey()
+            #cv2.imshow("result", result[0][:, :, ::-1])
+            #cv2.waitKey()
             return result[0]
 
     def run(self, image, mask):

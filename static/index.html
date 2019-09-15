@@ -5,10 +5,12 @@
 </head>
 <body>
     <input type="file" name="file" id="file" />
-    <input type="button" value="Detect" id="Detect">
+    <input type="button" value="Object Detect" id="Detect">
+    <input type="button" value="Image Inpainting" id="Inpainting">
     <input type="button" value="Clear" id="Clear">
     <div id="container" style="display: inline-block; position: relative;">
 		<img id="showimg" src=""/>
+        <img id="modifyimg" src=""/>
 		<canvas id="showimgcvs" style="position: absolute; left: 0; top: 0;" ></canvas>
 		<canvas id="removecvs" style="position: absolute; left: 0; top: 0;" ></canvas>
 	</div>

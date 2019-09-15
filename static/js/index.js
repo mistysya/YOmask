@@ -35,9 +35,34 @@ $(document).ready(function(){
 
     });
     
+    $('#Inpainting').click(function(){
+        var src = $('#showimg').attr('src');
+        //alert(src);
+        
+        $.ajax({
+            url: '/complete_image',
+            type: 'POST',
+            data:{
+                'img': src,
+                'remove': remove,
+                'count': remove.length
+            },
+            // async: false,
+            cache: false,
+        }).done(function(res){
+            $('#modifyimg').attr('src',res.img);
+            
+            
+        }).fail(function(){
+            console.log("Image inpainting fail");
+        });
+        
+    });
+    
+    
     $('#Detect').click(function(){
          var src = $('#showimg').attr('src');
-         alert(src);
+         //alert(src);
 
          $.ajax({
             url: '/detect_image',
