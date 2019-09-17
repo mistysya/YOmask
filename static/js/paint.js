@@ -23,8 +23,9 @@ var strokeColorSetting = "#00b16a";
 var strokeSizeSetting = 5;
 
 // Elements
-//var canvas = document.getElementById("canvas");
+var canvas = document.getElementById("canvas");
 var control = document.getElementById("control");
+var context = "";
 //var context = canvas.getContext("2d");
 var brushDisplay = document.getElementById('brush');
 var colorDisplay = document.getElementById('color');
@@ -36,8 +37,8 @@ var toolKit = document.getElementById('tools');
 // Document function
 
 function initializeDocument(){
-    //canvas.width = document.body.clientWidth;
-    //canvas.height = document.body.clientHeight - control.clientHeight;
+    canvas.width = document.body.clientWidth;
+    canvas.height = document.body.clientHeight - control.clientHeight;
     for (var i = 0; i < kit_dict['paints'].length; i++){
         paintKit.innerHTML += "<div class='tool-thin' style='background:" + kit_dict['paints'][i] + "!important' " + "color='"+ kit_dict['paints'][i] +"'" +"></div>\n";
     }
@@ -49,7 +50,7 @@ function initializeDocument(){
     paintList[0].classList.add("selected");
     paintButton.classList.add("selected");
 }
-/*
+
 function get_mouse_position(canvas, event) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -57,8 +58,7 @@ function get_mouse_position(canvas, event) {
         y: event.clientY - rect.top
     };
 };
-*/
-/*
+
 // Drawing functions
 function addClick(x, y, dragging){
     clickX.push(x);
@@ -99,14 +99,14 @@ function redraw(context){
         context.stroke();
     }   
 }
-*/
+
 
 // main:
-/*
+
 initializeDocument();
-*/
+
 // Drawing board event functions
-/*
+
 function handleStart(event){
     if (toolSelected == 'paint'){
         mouse_position = get_mouse_position(canvas, event);
@@ -135,10 +135,10 @@ function handleEnd(event){
         paint = false;
     }
 }
-*/
+
 
 // Drawing board events
-/*
+
 canvas.addEventListener('mousedown', handleStart, false);
 canvas.addEventListener('mousemove', handleMove, false);
 canvas.addEventListener('mouseup', handleEnd, false);
@@ -147,8 +147,7 @@ canvas.addEventListener("touchstart", handleStart, false);
 canvas.addEventListener("touchend", handleEnd, false);
 canvas.addEventListener("touchcancel", handleEnd, false);
 canvas.addEventListener("touchmove", handleMove, false);
-*/
-/*
+
 var clearButton = document.getElementById('delete');
 clearButton.addEventListener('click', function(event){
     clearCanvas(context);
@@ -198,4 +197,3 @@ for (var i = 0; i < toolList.length; i++) {
         this.classList.add("selected");
     }, false);
 }
-*/
