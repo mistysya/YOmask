@@ -38,6 +38,20 @@ $(document).ready(function(){
         console.log($(this).val());
     })
     
+    function downloadImage(src,type) {
+        var $a = $("<a></a>").attr("href", src).attr("download", "image."+type);
+        $a[0].click();
+    }
+    
+    $('#save').click(function(){
+        var src = $('#showimg').attr('src');
+        var str = src.split('/',2)[1];
+        var type = str.split(';',2)[0];
+        downloadImage(src,type);
+    
+    });
+    
+    
     $('#Inpainting').click(function(){
         var src = $('#showimg').attr('src');
         //alert(src);
@@ -55,7 +69,7 @@ $(document).ready(function(){
             // async: false,
             cache: false,
         }).done(function(res){
-            $('#modifyimg').attr('src',res.img);
+            $('#showimg').attr('src',res.img);
             
             
         }).fail(function(){
