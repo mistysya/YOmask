@@ -9,10 +9,10 @@ $(document).ready(function(){
     
     $("#file").change(function(){
         var img = this.files[0];
-        if(!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jpeg)$/.test(img.name)) ){
+        if (!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jpeg)$/.test(img.name)) ){
             alert('圖片只能是jpg,jpeg,png');
             return ;
-        }else{
+        } else {
 
             if(window.FileReader) {
 
@@ -32,13 +32,18 @@ $(document).ready(function(){
                 };
             }
         }
-
     });
+
+    $('#Select').change(function() {
+        console.log($(this).val());
+    })
     
     $('#Inpainting').click(function(){
         var src = $('#showimg').attr('src');
         //alert(src);
         
+        var allRemove;
+
         $.ajax({
             url: '/complete_image',
             type: 'POST',
@@ -82,7 +87,7 @@ $(document).ready(function(){
             var ctx = cvs.getContext("2d");
             ctx.clearRect(0, 0, cvs.width, cvs.height);
             ctx.beginPath();
-            ctx.lineWidth = "2";
+            ctx.lineWidth = 2;
             ctx.strokeStyle = "red";
             for (var i = 0; i < res.rois.length; i++) {
                 var y = res.rois[i][0],x = res.rois[i][1],h = res.rois[i][2]-y,w = res.rois[i][3]-x;
@@ -90,6 +95,7 @@ $(document).ready(function(){
                 ctx.rect(x, y, w, h);
             }
             ctx.stroke();
+            select = document.getElementById('Select');
             for (var i = 0; i < res.rois.length; i++) { 
                 var y = res.rois[i][0],x = res.rois[i][1],h = res.rois[i][2]-y,w = res.rois[i][3]-x;           
                 ctx.font = 18;
@@ -100,6 +106,9 @@ $(document).ready(function(){
                 ctx.textBaseline = 'top';
                 ctx.fillStyle = 'black';
                 ctx.fillText(txt, x, y-12);
+
+
+                select.options[select.options.length] = new Option(txt, i);
             }
             ctx.stroke();
         }).fail(function(){
@@ -148,7 +157,7 @@ $(document).ready(function(){
             var height = mousey-last_mousey;
             ctx.rect(last_mousex,last_mousey,width,height);
             ctx.strokeStyle = 'green';
-            ctx.lineWidth = 8;
+            ctx.lineWidth = 2;
 
             for (var i = 0; i < remove.length; i++) { 
                 ctx.rect(remove[i][1],remove[i][0],remove[i][3],remove[i][2]);
