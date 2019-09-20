@@ -15,10 +15,13 @@
     
     <input type="button" value="Image Inpainting" id="Inpainting">
     -->    
-    <div id="container" style="display: inline-block; position: relative; margin: 20px auto;text-align:center;">
-		<img id="showimg" src=""/>
-		<canvas id="showimgcvs" style="position: absolute; left: 0; top: 0;" ></canvas>
-		<canvas id="removecvs" style="position: absolute; left: 0; top: 0;" ></canvas>
+    <div id="container" style="position: relative; margin: 20px auto;text-align:center;">
+		<img id="showimg" src="" style="position: absolute; margin: 0 auto; 
+                                        top: 0; bottom: 0; left: 0; right: 0;"/>
+		<canvas id="showimgcvs" style="position: absolute; margin: 0 auto; 
+                                    top: 0; bottom: 0; left: 0; right: 0;"></canvas>
+		<canvas id="removecvs" style="position: absolute; margin: 0 auto; 
+                                    top: 0; bottom: 0; left: 0; right: 0;"></canvas>
 	</div>
     
     
@@ -116,7 +119,7 @@
 	</script>
     -->
     <script src="js/jquery-2.1.4.min.js"></script>
-    <!--<script type="text/javascript" src="js/paint.js"></script>-->
+    <script type="text/javascript" src="js/paint.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     
 </body>

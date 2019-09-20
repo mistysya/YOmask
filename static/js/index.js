@@ -12,25 +12,25 @@ $(document).ready(function(){
         if (!(img.type.indexOf('image')==0 && img.type && /\.(?:jpg|png|jpeg)$/.test(img.name)) ){
             alert('圖片只能是jpg,jpeg,png');
             return ;
-        } else {
+        } 
+        
+        if(window.FileReader) {
+            console.log(img);
+            var fr = new FileReader();
+            var showimg = document.getElementById('showimg');
+            var cvs = document.getElementById('showimgcvs');
+            var rcvs = document.getElementById('removecvs');
+            fr.readAsDataURL(img);
+            console.log(fr);
+            fr.onloadend = function(e) {
+                console.log(e);
+                showimg.src = e.target.result;
 
-            if(window.FileReader) {
-
-                var fr = new FileReader();
-                var showimg = document.getElementById('showimg');
-                var cvs = document.getElementById('showimgcvs');
-                var rcvs = document.getElementById('removecvs');
-                fr.readAsDataURL(img);
-                fr.onloadend = function(e) {
-                    showimg.src = e.target.result;
-                    cvs.width = showimg.width;
-                    cvs.height = showimg.height;
-                    rcvs.width = showimg.width;
-                    rcvs.height = showimg.height;
-
-                    //alert(e.target.result);
-                };
-            }
+                cvs.width = showimg.width;
+                cvs.height = showimg.height;
+                rcvs.width = showimg.width;
+                rcvs.height = showimg.height;
+            };
         }
     });
 
