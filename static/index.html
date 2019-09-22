@@ -2,23 +2,103 @@
 <html>
 <head>
 	<title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link href="css/font-awesome-all.css" rel="stylesheet" type="text/css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
 </head>
 <body>
+    <!--
     <input type="file" name="file" id="file" />
     <input type="button" value="Object Detect" id="Detect">
+    
     <input type="button" value="Image Inpainting" id="Inpainting">
-    <input type="button" value="Clear" id="Clear">
-    <select multiple="multiple" id="Select"></select>
-    <div id="container" style="display: inline-block; position: relative;">
-    	<div>
-    		<img id="showimg" src=""/>
-    		<canvas id="showimgcvs" style="width: auto; height: auto;" ></canvas>
-    		<canvas id="removecvs" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" ></canvas>
-    	</div>
-		
-        <img id="modifyimg" src=""/>
-		
+    -->    
+    <div id="container" style="position: relative; margin: 20px auto;text-align:center;">
+		<img id="showimg" src="" style="position: absolute; margin: 0 auto; 
+                                        top: 0; bottom: 0; left: 0; right: 0;"/>
+		<canvas id="showimgcvs" style="position: absolute; margin: 0 auto; 
+                                    top: 0; bottom: 0; left: 0; right: 0;"></canvas>
+		<canvas id="removecvs" style="position: absolute; margin: 0 auto; 
+                                    top: 0; bottom: 0; left: 0; right: 0;"></canvas>
 	</div>
+    
+    
+    <!-- partial:index.partial.html -->
+    
+    
+    <!--<canvas id="canvas">Your browser does not support canvas element.</canvas>-->
+    
+    
+    <div id="control">
+        <div class="container">
+            <h1 class="heading">Image Editor</h1>
+            <h2 class="subheading">Mask R-CNN & Image inpainting Network</h2><!--
+         --><div class="control-box">
+                <div class="control-header">Toolkit</div>
+                <div id="tools" class="control-inner">
+                    <div  class='tool' id='upload'>
+                        <input type="file"id="file"  style="opacity: 0.0; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height:100%;" />
+                        <i class='fa fa-picture-o'></i>
+                        <h2>upload image</h2>
+                    </div>
+                    <div  class='tool' id='mask'>
+                        <i class='fa fa-paint-brush'></i>
+                        <h2>create mask</h2>
+                    </div>
+                    <div class='tool' id='Inpainting'>
+                        <i class='fas fa-fill'></i>
+                        <h2>Image inpainting</h2>
+                    </div>
+                    <div class='tool' id='Detect'>
+                        <i class='fas fa-search'></i>
+                        <h2>object detect</h2>
+                    </div>
+                    <div class='tool' id='save'>
+                        <i class='fa fa-floppy-o'></i>
+                        <h2>download image</h2>
+                    </div>
+                    <div class='tool' id='Clear'>
+                        <i class='fas fa-trash'></i>
+                        <h2>delete mask</h2>
+                    </div>
+                </div>
+            </div><!--
+         --><div class="control-box brush">
+            <div class="control-header">Mask Setting</div>
+                <!--
+                <div class="brush">
+                    <div class="control-inner">
+                        <div class="control-header" style="margin-top:10px!important">Size</div>
+                        <input id="brush" type="text" value="5"/>
+                        <div class="control-header" style="margin-top:10px!important">Color</div>
+                        <input id="color" type="text" value="#00B16A"/>
+                        <div class="control-header" style="margin-top:10px!important">Alpha</div>
+                        <input id="alpha" type="text" value="1.0"/>
+                    </div>
+                </div>
+                -->
+            </div><!--
+         --><div class="control-box palette">
+                <div class="control-header">Palette</div>
+                <div id="paints" class="control-inner">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="github"><a href="https://github.com/ishaansaxena/Canvass_paintapp.git"target="blank"><i class="fab fa-github"></i></a></div>
+    <div class="web"><a href="http://ishaansaxena.in/" target="blank"><i class="fas fa-link"></i></a></div>
+    -->
+    <!-- partial -->
+
+    
+    
+    
+    
+    
     
     <!--
 	<script type="text/javascript">
@@ -39,6 +119,8 @@
 	</script>
     -->
     <script src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/paint.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    
 </body>
 </html>

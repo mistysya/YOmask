@@ -4,6 +4,8 @@ var last_mousex = last_mousey = 0;
 var mousex = mousey = 0;
 var mousedown = false;
 
+var image = new Image();
+
 $(document).ready(function(){
 
     
@@ -15,28 +17,35 @@ $(document).ready(function(){
         } 
         
         if(window.FileReader) {
-            console.log(img);
+            //console.log(img);
             var fr = new FileReader();
-            var showimg = document.getElementById('showimg');
-            var cvs = document.getElementById('showimgcvs');
-            var rcvs = document.getElementById('removecvs');
+            
             fr.readAsDataURL(img);
-            console.log(fr);
+            //console.log(fr);
             fr.onloadend = function(e) {
-                console.log(e);
                 showimg.src = e.target.result;
-
-                cvs.width = showimg.width;
-                cvs.height = showimg.height;
-                rcvs.width = showimg.width;
-                rcvs.height = showimg.height;
+                image.src = showimg.src;
             };
         }
     });
 
+    
+    
+    image.onload = function() {
+        var showimg = document.getElementById('showimg');
+        var cvs = document.getElementById('showimgcvs');
+        var rcvs = document.getElementById('removecvs');
+
+        cvs.width = showimg.width;
+        cvs.height = showimg.height;
+        rcvs.width = showimg.width;
+        rcvs.height = showimg.height;
+    }
+
+
     $('#Select').change(function() {
         console.log($(this).val());
-    })
+    });
     
     function downloadImage(src,type) {
         var $a = $("<a></a>").attr("href", src).attr("download", "image."+type);
@@ -109,7 +118,7 @@ $(document).ready(function(){
                 ctx.rect(x, y, w, h);
             }
             ctx.stroke();
-            select = document.getElementById('Select');
+            //select = document.getElementById('Select');
             for (var i = 0; i < res.rois.length; i++) { 
                 var y = res.rois[i][0],x = res.rois[i][1],h = res.rois[i][2]-y,w = res.rois[i][3]-x;           
                 ctx.font = 18;
@@ -122,7 +131,7 @@ $(document).ready(function(){
                 ctx.fillText(txt, x, y-12);
 
 
-                select.options[select.options.length] = new Option(txt, i);
+                //select.options[select.options.length] = new Option(txt, i);
             }
             ctx.stroke();
         }).fail(function(){
