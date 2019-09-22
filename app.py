@@ -90,6 +90,7 @@ def complete_image():
     
 
     image_inpainting = utils.complete(image, mask)
+    image_inpainting = cv2.cvtColor(image_inpainting , cv2.COLOR_BGR2RGB)
     retval, buffer = cv2.imencode('.'+imgType, image_inpainting)
     img_str = base64.b64encode(buffer)
     img_str = img_str.decode()
